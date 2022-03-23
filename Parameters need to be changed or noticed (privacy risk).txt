@@ -11,7 +11,7 @@ Ln 57: MAX_LEVELS = [1, 4, 2]  # maximal generalization level for each QID
 Ln 58: generalization_mat = [[], [[0, 60], [0, 30, 60, 90], [i * 10 for i in range(12)]], [[0, 1, 2]]]
 Ln 68:    elif np.array_equal(level, np.asarray([0, 0, 0])):
 
-Prepare_Synthetic_risk_model_vumc.py
+Synthetic_risk_model_vumc_attr.py
 Ln 68:    original_patient_filename = 'train_raw_14349'
 Ln 73:        original_fake_filename = 'round_syn_' + model + '_' + Exp_ID
 Ln 79:    attr_idx = np.concatenate([np.array([0, 1, 2, 3]), disease_attr_idx + 4])
