@@ -224,10 +224,10 @@ if __name__ == '__main__':
         else:
             progress = i_lattice / n_lattice_nodes
             remaining_time = (time.time() - start2) * (1 - progress) / progress
-            remaining_hours = remaining_time // 60
+            remaining_mins = remaining_time // 60
             remaining_seconds = remaining_time % 60
             print("Levels: " + str(levels) + " (" + str(progress * 100) + "% completed; finish in "
-                  + str(remaining_hours) + " hours " + str(remaining_seconds) + " seconds)")
+                  + str(remaining_mins) + " minutes " + str(remaining_seconds) + " seconds)")
         if sum(levels) == 0:
             pass
         else:
