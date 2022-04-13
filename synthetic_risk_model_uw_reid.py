@@ -5,19 +5,20 @@ from synthetic_risk_model_uw_utils import prepare_data
 import sys
 
 '''
-Usage: synthetic_risk_model_uw_reid.py [model] [exp_id] [theta] [original_filename] [pop_filename] [prefix_syn] [infix_syn] [output_directory]
+Usage: synthetic_risk_model_uw_reid.py [model] [exp_id] [theta] [original_filename] [pop_filename] [prefix_syn] [infix_syn] [output_directory] [n_phe_qid]
 
-Example: synthetic_risk_model_uw_reid.py iwae 1 0.05 train_uw pop_uw syn_ _uw _ Results_Synthetic_UW/
+Example: synthetic_risk_model_uw_reid.py iwae 1 0.05 train_uw pop_uw syn_ _uw _ Results_Synthetic_UW/ 5
 
 1. [model]: name of data generation model. Selected from ['iwae', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'iwae'.
 2. [exp_id]: No. of the experiment. Selected from ['1', '2', '3']. Default: '1'.
-3. [theta]: ratio of the correctly inferred attributed in a successful attack. A real number in [0, 1]. Default: '0.05'. Try: '0.001'.
+3. [theta]: ratio of the correctly inferred attributes in a successful attack. A real number in [0, 1]. Default: '0.05'. Try: '0.001'.
 4. [original_filename]: the filename of the original patient file. Default: 'train_uw'.
 5. [pop_filename]: the filename of the population file with demographics (QIDs) only. Default: 'pop_uw'.
 6. [prefix_syn]: the prefix of the synthetic filename. Default: 'syn_'.
 7. [suffix_syn]: the suffix of the synthetic filename. Default: '_uw'.
 8. [infix_syn]: the suffix of the synthetic filename in the middle of [model_name] and [exp_id]. Default: '_'.
 9. [output_directory]: output directory. Default: 'Results_Synthetic_UW/'.
+10. [n_phe_qid]: the number of phenotypic qids (most common diseases). An integer in [0, 10]. Default: '5'.
 '''
 
 
@@ -26,7 +27,7 @@ def replace_dataset(pop, level):
     final_pop = pop.copy()
     if np.array_equal(level, np.asarray(MAX_LEVELS)):
         return final_pop
-    elif np.array_equal(level, np.asarray([0, 0])):
+    elif np.array_equal(level, np.asarray([0] * n_qid)):
         return np.zeros(pop.shape)
     else:
         for i in range(n_po):
@@ -111,15 +112,18 @@ if __name__ == '__main__':
     exp_id = "1"
     theta = 0.05  # ratio of the correctly inferred attributed in a successful attack.
     original_patient_filename = 'train_uw'
-    pop_filename = 'pop_uw'
+    pop_filename = 'pop_uw_phe'
     prefix_syn = 'syn_'
     suffix_syn = '_uw'
     infix_syn = '_'
     Result_folder = "Results_Synthetic_UW/"
 
+    n_phe_qid = 5
     input_format = 'npy'
     randomization = True
-    qid_index = [0, 1]
+    top_phe = [10, 682, 1497, 17, 459, 285, 12, 1565, 967, 1575]
+    # 1010.0, 401.1, 745.0, 1010.7, 318.0, 272.1, 1010.2, 773.0, 530.11, 785.0
+    qid_index = [0, 1] + [top_phe[i] + 3 for i in range(n_phe_qid)]  # shifted
     n_qid = len(qid_index)
     n_index = 2665
     sense_index = [i for i in range(n_qid, n_index)]
@@ -135,7 +139,7 @@ if __name__ == '__main__':
     exp_name = "Reid_Risk"
 
     start1 = time.time()
-    # Enable the input of parameters including start_iter and n_iter
+    # Enable the input of parameters
     if len(sys.argv) >= 2:
         model = sys.argv[1]
     if len(sys.argv) >= 3:
@@ -154,6 +158,8 @@ if __name__ == '__main__':
         infix_syn = sys.argv[8]
     if len(sys.argv) >= 10:
         Result_folder = sys.argv[9]
+    if len(sys.argv) >= 11:
+        n_phe_qid = int(sys.argv[10])
     print("output_directory: " + Result_folder)
     print("original_filename: " + original_patient_filename)
     print("pop_filename: " + pop_filename)
@@ -186,14 +192,14 @@ if __name__ == '__main__':
     (n_pop, _) = original_pop_array.shape
 
     # preprocess datasets
-    original_pop_array_qid = original_pop_array[:, qid_index]
+    original_pop_array_qid = original_pop_array[:, 0:n_qid]
     original_patient_array_qid = original_patient_array[:, qid_index]
     original_fake_array_qid = original_fake_array[:, qid_index]
     patient_array_sense = original_patient_array[:, sense_index]
     fake_array_sense = original_fake_array[:, sense_index]
 
-    MAX_LEVELS = [1, 2]  # maximal generalization level for each QID
-    generalization_mat = [[], [[0, 1, 2]]]
+    MAX_LEVELS = [1, 2] + [1] * n_phe_qid  # maximal generalization level for each QID
+    generalization_mat = [[], [[0, 1, 2]]] + [[]] * n_phe_qid
     # subsets_levels = [1] * n_qid
 
     dic_replace = {}
@@ -209,11 +215,19 @@ if __name__ == '__main__':
     else:
         list_lamb = np.ones(n_patient)
 
+    start2 = time.time()
     dic_p = {}
-
     for i_lattice in range(n_lattice_nodes):
         levels = lattice[i_lattice]
-        print("Levels: " + str(levels))
+        if i_lattice == 0:
+            print("Levels: " + str(levels) + " (0% completed)")
+        else:
+            progress = i_lattice / n_lattice_nodes
+            remaining_time = (time.time() - start2) * (1 - progress) / progress
+            remaining_hours = remaining_time // 60
+            remaining_seconds = remaining_time % 60
+            print("Levels: " + str(levels) + " (" + str(progress * 100) + "% completed; finish in "
+                  + str(remaining_hours) + " hours " + str(remaining_seconds) + " seconds)")
         if sum(levels) == 0:
             pass
         else:
@@ -287,7 +301,7 @@ if __name__ == '__main__':
     sum_risk_b_worse = np.sum(risk_b_worse)
     result = max(1 / n_pop * sum_risk_a_worse, 1 / n_patient * sum_risk_b_worse)
     elapsed1 = (time.time() - start1)
-    with open(Result_folder + exp_name + "_" + model + "_" + exp_id + "_theta" + str(theta) + ".txt", 'w') as f:
+    with open(Result_folder + exp_name + "_" + model + "_" + exp_id + "_qid" + str(n_qid) + "_theta" + str(theta) + ".txt", 'w') as f:
         f.write(str(result) + "\n")
         f.write("Time used: " + str(elapsed1) + " seconds.\n")
     print("Risk: " + str(result) + ".")
