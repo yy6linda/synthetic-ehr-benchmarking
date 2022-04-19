@@ -116,27 +116,8 @@ if __name__ == '__main__':
     prefix_syn = 'syn_'
     suffix_syn = '_uw'
     infix_syn = '_'
-    Result_folder = "Results_Synthetic_UW/"
-
+    Result_folder = "Results_Synthetic_UW_phe/"
     n_phe_qid = 5
-    input_format = 'npy'
-    randomization = True
-    top_phe = [10, 682, 1497, 17, 459, 285, 12, 1565, 967, 1575]
-    # 1010.0, 401.1, 745.0, 1010.7, 318.0, 272.1, 1010.2, 773.0, 530.11, 785.0
-    qid_index = [0, 1] + [top_phe[i] + 3 for i in range(n_phe_qid)]  # shifted
-    n_qid = len(qid_index)
-    n_index = 2665
-    sense_index = [i for i in range(n_qid, n_index)]
-    # sense_index.reverse()
-    n_sense_index = len(sense_index)
-    theta_distance_pop = 0
-    vr_mean = 0.23  # verification rate
-    vr_min = 0.1
-    vr_max = 0.43  # 0.61
-    er_mean = 0.0426  # data error rate
-    er_min = 0.0013
-    er_max = 0.065  # 0.269
-    exp_name = "Reid_Risk"
 
     start1 = time.time()
     # Enable the input of parameters
@@ -166,6 +147,25 @@ if __name__ == '__main__':
     print("syn_filename: " + prefix_syn + model + infix_syn + exp_id + suffix_syn)
     print("theta: " + str(theta))
 
+    input_format = 'npy'
+    randomization = True
+    top_phe = [10, 682, 1497, 17, 459, 285, 12, 1565, 967, 1575]
+    # 1010.0, 401.1, 745.0, 1010.7, 318.0, 272.1, 1010.2, 773.0, 530.11, 785.0
+    qid_index = [0, 1] + [top_phe[i] + 3 for i in range(n_phe_qid)]  # shifted
+    n_qid = len(qid_index)
+    n_index = 2665
+    sense_index = [i for i in range(n_qid, n_index)]
+    # sense_index.reverse()
+    n_sense_index = len(sense_index)
+    theta_distance_pop = 0
+    vr_mean = 0.23  # verification rate
+    vr_min = 0.1
+    vr_max = 0.43  # 0.61
+    er_mean = 0.0426  # data error rate
+    er_min = 0.0013
+    er_max = 0.065  # 0.269
+    exp_name = "Reid_Risk"
+
     # input patient dataset
     if input_format == 'npy':
         original_patient_array = prepare_data('data/' + original_patient_filename + '.npy')
@@ -186,7 +186,8 @@ if __name__ == '__main__':
 
     # input pop dataset
     if input_format == 'npy':
-        original_pop_array = np.load('data/' + pop_filename + '.npy')  # already prepared
+        #original_pop_array = np.load('data/' + pop_filename + '.npy')  # already prepared
+        original_pop_array = np.genfromtxt('data/' + pop_filename + '.csv', delimiter=',', skip_header=1)
     else:
         original_pop_array = np.genfromtxt('data/' + pop_filename + '.csv', delimiter=',', skip_header=1)
     (n_pop, _) = original_pop_array.shape
