@@ -149,7 +149,7 @@ if __name__ == '__main__':
     if not os.path.exists(Result_folder):
         os.mkdir(Result_folder)
 
-    SENSE_BEGIN = 8  # first 3 attributes are not sensitive
+    SENSE_BEGIN = 8  # first 8 attributes are not sensitive
     N_attr = 2670  # number of total attributes
     exp_name = "Attr_Risk"
 
