@@ -3,6 +3,24 @@ import numpy as np
 import time
 from scipy import stats
 import os.path
+import sys
+
+'''
+Usage: synthetic_risk_model_vumc_attr.py [model] [exp_id] [x] [y] [original_filename] [prefix_syn] [infix_syn] [output_directory]
+
+Example: synthetic_risk_model_vumc_attr.py iwae 1 0 8 train_uw syn_ _vumc _ Results_Synthetic_VUMC/
+
+1. [model]: name of data generation model. Selected from ['iwae', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'iwae'.
+2. [exp_id]: No. of the experiment. Selected from ['1', '2', '3']. Default: '1'.
+3. [x]: 10 to x is the number of neighbours. A integer larger than -1. Default: '0'. Try: '1'.
+4. [y]: 2 to y is the number of sensitive attributes A integer larger than -1. Default: '8'. Try: '10'.
+5. [original_filename]: the filename of the original patient file. Default: 'train_vumc'.
+6. [prefix_syn]: the prefix of the synthetic filename. Default: 'syn_'.
+7. [suffix_syn]: the suffix of the synthetic filename. Default: '_vumc'.
+8. [infix_syn]: the suffix of the synthetic filename in the middle of [model_name] and [exp_id]. Default: '_'.
+9. [output_directory]: output directory. Default: 'Results_Synthetic_VUMC/'.
+'''
+
 
 def get_entropy(column):
     (hist, bin_edges) = np.histogram(column, bins=np.arange(min(column), max(column) + 2))
@@ -61,24 +79,14 @@ class Model(object):
         self.correct.append(correct)
 
 
-def cal_score(n, k, model):
+def cal_score(n, k):
     # 2^n: the number of attributes used by the attacker
     # 10^k: the number of neighbours
-    # model: 'medgan', 'medbgan', 'iwae', 'emrwgan'
-    original_patient_filename = 'train_raw_14349'
-    real = np.genfromtxt('data/' + original_patient_filename + '.csv', delimiter=',', skip_header=1)
-    if model == 'real':
-        fake = real
-    else:
-        original_fake_filename = 'round_syn_' + model + '_' + Exp_ID
-        fake = np.genfromtxt('data/' + original_fake_filename + '.csv', delimiter=',', skip_header=1)
-    #num = int(fake.shape[0] * 0.1)  # 10% sample
-    #idx = np.random.choice(real.shape[0], num, replace=False)
-    real_disease = real[:, SENSE_BEGIN:sense_end]
+
+    real_disease = real[:, SENSE_BEGIN:SENSE_END]
     disease_attr_idx = np.flipud(np.argsort(np.mean(real_disease, axis=0)))[:2**n]  # sorted by how common a disease is
-    attr_idx = np.concatenate([np.array([0, 1, 2, 3]), disease_attr_idx + 4])
+    attr_idx = np.concatenate([np.array(range(SENSE_BEGIN)), np.array([N_attr - 1]), disease_attr_idx + SENSE_BEGIN])
     model = Model(fake, 2 ** n, 10 ** k, attr_idx)
-    #for record in real[idx]:
     n_rows = np.shape(real)[0]
     for i in range(n_rows):
         if i % 100 == 0:
@@ -115,28 +123,64 @@ def cal_score(n, k, model):
 
 
 if __name__ == '__main__':
-    Exp_name = "Attr_Risk_"
-    Exp_ID = "3"
-    Result_folder = "Results_Synthetic_Attr/"
+    # Default configuration
+    model = 'dpgan'
+    exp_id = "3"
+    x = 1  # 10 to x is the number of neighbours [0, 1]
+    y = 8  # 2 to y is the number of sensitive attributes used by the attacker [0, 11]
+    original_patient_filename = 'train_raw_correct'
+    prefix_syn = 'correct_round_syn_'
+    suffix_syn = ''
+    infix_syn = '_'
+    Result_folder = "Results_Synthetic_VUMC_V3/"
+
+    start1 = time.time()
+    # Enable the input of parameters
+    if len(sys.argv) >= 2:
+        model = sys.argv[1]
+    if len(sys.argv) >= 3:
+        exp_id = sys.argv[2]
+    if len(sys.argv) >= 4:
+        x = int(sys.argv[3])
+    if len(sys.argv) >= 5:
+        y = int(sys.argv[4])
+    if len(sys.argv) >= 6:
+        original_patient_filename = sys.argv[5]
+    if len(sys.argv) >= 7:
+        prefix_syn = sys.argv[6]
+    if len(sys.argv) >= 8:
+        suffix_syn = sys.argv[7]
+    if len(sys.argv) >= 9:
+        infix_syn = sys.argv[8]
+    if len(sys.argv) >= 10:
+        Result_folder = sys.argv[9]
+    print("output_directory: " + Result_folder)
+    print("original_filename: " + original_patient_filename)
+    print("syn_filename: " + prefix_syn + model + infix_syn + exp_id + suffix_syn)
+    print("x: " + str(x))
+    print("y: " + str(y))
     if not os.path.exists(Result_folder):
         os.mkdir(Result_folder)
-    print(Result_folder)
 
-    SENSE_BEGIN = 4  # first 4 attributes are not sensitive
-    x = 0  # for x in [0]:  # 10 to the number of neighbours [0, 1]
-    y = 8  #for y in [0, 2, 4, 6, 8]:  # 2 to the number of sensitive attributes used by the attacker [0, 9, 10, 11]
-    start1 = time.time()
-    N_attr = 2592  # number of total attributes
-    N_cont = 7  # number of continuous attributes
-    sense_end = N_attr - N_cont
+    SENSE_BEGIN = 7  # first 7 attributes are not sensitive
+    N_attr = 2596  # number of total attributes
+    N_cont = 8  # number of continuous attributes
+    SENSE_END = N_attr - N_cont
     cont_sense = np.array([False for i in range(N_attr - N_cont)] + [True for i in range(N_cont)])
-    results = []
-    for m in ['iwae', 'medgan', 'medbgan','emrwgan', 'medwgan', 'dpgan', 'real']:
-        #result = []
-        print("y=" + str(y))
-        print("model=" + m)
-        #result.append(cal_score(y, x, m))
-        results.append(cal_score(y, x, m))
+    exp_name = "Attr_Risk"
+
+    # load datasets
+    real = np.load('data/' + original_patient_filename + '.npy')
+    if model == 'real':
+        fake = real
+    else:
+        fake_filename = prefix_syn + model + infix_syn + exp_id + suffix_syn
+        fake = np.load('data/' + fake_filename + '.npy')
+    fake_std = np.std(fake[:, cont_sense], axis=0)
+    result = cal_score(y, x)
     elapsed1 = (time.time() - start1)
-    print("Time used: " + str(elapsed1) + " seconds.\n")
-    np.savetxt(Result_folder + Exp_name + "Ex" + Exp_ID + "_y" + str(y) + ".csv", np.array(results), delimiter=",")
+    print("Risk: " + str(result) + ".")
+    print("Time used: " + str(elapsed1) + " seconds.")
+    with open(Result_folder + exp_name + "_" + model + "_" + exp_id + "_x" + str(x) + "_y" + str(y) + ".txt", 'w') as f:
+        f.write(str(result) + "\n")
+        f.write("Time used: " + str(elapsed1) + " seconds.\n")
