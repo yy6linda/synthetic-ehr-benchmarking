@@ -5,7 +5,7 @@ import numpy as np
 import time
 from scipy import stats
 import os.path
-from synthetic_risk_model_uw_utils_v2 import reorder_data
+from synthetic_risk_model_uw_utils import reorder_data
 import sys
 
 '''
