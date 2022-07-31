@@ -1,6 +1,6 @@
-Usage: synthetic_risk_model_uw_mem.py [model] [exp_id] [beta] [train_filename] [test_filename] [prefix_syn] [infix_syn] [output_directory]
+Usage: synthetic_risk_model_mem.py [model] [exp_id] [beta] [train_filename] [test_filename] [prefix_syn] [infix_syn] [output_directory]
 
-Example: synthetic_risk_model_uw_mem.py iwae 1 0.05 train_uw test_uw syn_ _uw _ Results_Synthetic_UW/
+Example: synthetic_risk_model_mem.py iwae 1 0.05 train_uw test_uw syn_ _uw _ Results_Synthetic_UW/
 
 1. [model]: name of data generation model. Selected from ['iwae', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'iwae'.
 2. [exp_id]: No. of the experiment. Selected from ['1', '2', '3']. Default: '1'.
@@ -14,9 +14,9 @@ Example: synthetic_risk_model_uw_mem.py iwae 1 0.05 train_uw test_uw syn_ _uw _ 
 
 
 
-Usage: synthetic_risk_model_uw_attr.py [model] [exp_id] [x] [y] [original_filename] [prefix_syn] [infix_syn] [output_directory]
+Usage: synthetic_risk_model_attr.py [model] [exp_id] [x] [y] [original_filename] [prefix_syn] [infix_syn] [output_directory]
 
-Example: synthetic_risk_model_uw_attr.py iwae 1 0 8 train_uw syn_ _uw _ Results_Synthetic_UW/
+Example: synthetic_risk_model_attr.py iwae 1 0 8 train_uw syn_ _uw _ Results_Synthetic_UW/
 
 1. [model]: name of data generation model. Selected from ['iwae', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'iwae'.
 2. [exp_id]: No. of the experiment. Selected from ['1', '2', '3']. Default: '1'.
@@ -30,9 +30,9 @@ Example: synthetic_risk_model_uw_attr.py iwae 1 0 8 train_uw syn_ _uw _ Results_
 
 
 
-Usage: synthetic_risk_model_uw_reid.py [model] [exp_id] [theta] [original_filename] [pop_filename] [prefix_syn] [infix_syn] [output_directory]
+Usage: synthetic_risk_model_reid.py [model] [exp_id] [theta] [original_filename] [pop_filename] [prefix_syn] [infix_syn] [output_directory]
 
-Example: synthetic_risk_model_uw_reid.py iwae 1 0.05 train_uw pop_uw syn_ _uw _ Results_Synthetic_UW/
+Example: synthetic_risk_model_reid.py iwae 1 0.05 train_uw pop_uw syn_ _uw _ Results_Synthetic_UW/
 
 1. [model]: name of data generation model. Selected from ['iwae', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'iwae'.
 2. [exp_id]: No. of the experiment. Selected from ['1', '2', '3']. Default: '1'.

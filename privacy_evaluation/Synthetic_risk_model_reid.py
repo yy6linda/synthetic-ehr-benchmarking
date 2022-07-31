@@ -1,6 +1,9 @@
+# 01/17/2022 created by Zhiyu Wan
+# 07/27/2022 edited by Zhiyu Wan
 import numpy as np
 import time
 from scipy.linalg import cholesky
+from synthetic_risk_model_utils import prepare_data
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 import sys
@@ -8,9 +11,9 @@ import os.path
 import datetime
 
 '''
-Usage: synthetic_risk_model_vumc_reid.py [model] [exp_id] [theta] [original_filename] [pop_filename] [prefix_syn] [infix_syn] [output_directory] [n_phe_qid]
+Usage: synthetic_risk_model_reid.py [model] [exp_id] [theta] [original_filename] [pop_filename] [prefix_syn] [infix_syn] [output_directory] [n_phe_qid]
 
-Example: synthetic_risk_model_vumc_reid.py iwae 1 0.05 train_vumc pop_vumc syn_ _vumc _ Results_Synthetic_VUMC/ 7
+Example: synthetic_risk_model_reid.py iwae 1 0.05 train_vumc pop_vumc syn_ _vumc _ Results_Synthetic_VUMC/ 7
 
 1. [model]: name of data generation model. Selected from ['iwae', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'iwae'.
 2. [exp_id]: No. of the experiment. Selected from ['1', '2', '3']. Default: '1'.
@@ -37,11 +40,12 @@ def replace_dataset(pop, level):
             new_pop_row = pop[i, :].copy()
             for j in range(len(level)):
                 attr = j
-                attr_value = new_pop_row[j]
+                attr_value = new_pop_row[j]  # pop[i, j]
                 attr_level = level[j]
                 tuple_replace = (attr, attr_value, attr_level)
                 if tuple_replace in dic_replace:
                     new_pop_row[j] = dic_replace[tuple_replace]
+                    #print("hit dic_replace!")
                 else:
                     if attr_level == 0:
                         new_pop_row[j] = 0
@@ -110,15 +114,16 @@ def rand_lamb(n_simu):
 if __name__ == '__main__':
 
     # default configuration
-    model = 'real'
-    exp_id = "2"
-    theta = 0.001  # ratio of the correctly inferred attributed in a successful attack.
-    original_patient_filename = 'train_raw_correct'
-    pop_filename = 'pop_vumc'
-    prefix_syn = 'correct_round_syn_'
-    suffix_syn = ''
+    dataset = "vumc"  # or "uw"
+    model = 'iwae'
+    exp_id = "1"
+    theta = 0.05  # ratio of the correctly inferred attributed in a successful attack.
+    original_patient_filename = 'train_' + dataset
+    pop_filename = 'pop_' + dataset
+    prefix_syn = 'syn_'
+    suffix_syn = '_' + dataset
     infix_syn = '_'
-    Result_folder = "Results_Synthetic_VUMC/"
+    Result_folder = "Results_Synthetic_" + dataset + "/"
     n_phe_qid = 7
 
     start1 = time.time()
@@ -152,16 +157,25 @@ if __name__ == '__main__':
         os.mkdir(Result_folder)
 
     randomization = True
-    top_phe = [509, 1129, 602, 1185, 654, 1200, 1176, 525, 1183, 698]
-    # 401.1, 745, 465, 785, 512.8, 798, 773, 418, 783, 530.11
-    qid_index = [0, 1, 2] + [top_phe[i] for i in range(n_phe_qid)]
-    n_qid = len(qid_index)
-    n_index = 2592
-    sense_index = [j for j in range(n_index) if j not in qid_index]  # non-QID attributes' indexes
-    # sense_index.reverse()
-    n_sense_index = len(sense_index)
-    nom_sense = [True for i in range(n_sense_index - 7)] + [False for i in range(7)]
-    #nom_sense.reverse()
+    if dataset == 'vumc':
+        input_format = 'csv'
+        top_phe = [509, 1129, 602, 1185, 654, 1200, 1176, 525, 1183, 698]
+        # 401.1, 745, 465, 785, 512.8, 798, 773, 418, 783, 530.11
+        qid_index = [0, 1, 2] + [top_phe[i] for i in range(n_phe_qid)]
+        n_qid = len(qid_index)
+        n_index = 2592
+        sense_index = [j for j in range(n_index) if j not in qid_index]  # non-QID attributes' indexes
+        n_sense_index = len(sense_index)
+        nom_sense = [True for i in range(n_sense_index - 7)] + [False for i in range(7)]
+    else:
+        input_format = 'npy'
+        top_phe = [10, 682, 1497, 17, 459, 285, 12, 1565, 967, 1575]
+        # 1010.0, 401.1, 745.0, 1010.7, 318.0, 272.1, 1010.2, 773.0, 530.11, 785.0
+        qid_index = [0, 1] + [top_phe[i] + 3 for i in range(n_phe_qid)]  # shifted
+        n_qid = len(qid_index)
+        n_index = 2665
+        sense_index = [i for i in range(n_qid, n_index)]
+        n_sense_index = len(sense_index)
     theta_distance_pop = 0
     vr_mean = 0.23  # verification rate
     vr_min = 0.1
@@ -173,7 +187,10 @@ if __name__ == '__main__':
     pid = os.getpid()
 
     # input patient dataset
-    original_patient_array = np.genfromtxt('data/' + original_patient_filename + '.csv', delimiter=',', skip_header=1)
+    if input_format == 'npy':
+        original_patient_array = prepare_data('data/' + original_patient_filename + '.npy')
+    else:
+        original_patient_array = np.genfromtxt('data/' + original_patient_filename + '.csv', delimiter=',', skip_header=1)
     (n_patient, _) = original_patient_array.shape
 
     # input fake patient dataset
@@ -181,11 +198,17 @@ if __name__ == '__main__':
         original_fake_array = original_patient_array
     else:
         fake_filename = prefix_syn + model + infix_syn + exp_id + suffix_syn
-        original_fake_array = np.genfromtxt('data/' + fake_filename + '.csv', delimiter=',', skip_header=1)
+        if input_format == 'npy':
+            original_fake_array = prepare_data('data/' + fake_filename + '.npy')
+        else:
+            original_fake_array = np.genfromtxt('data/' + fake_filename + '.csv', delimiter=',', skip_header=1)
     (n_fake, _) = original_fake_array.shape
 
     # input pop dataset
-    original_pop_array = np.genfromtxt('data/' + pop_filename + '.csv', delimiter=',', skip_header=1)
+    if input_format == 'npy':
+        original_pop_array = np.load('data/' + pop_filename + '.npy')
+    else:
+        original_pop_array = np.genfromtxt('data/' + pop_filename + '.csv', delimiter=',', skip_header=1)
     (n_pop, _) = original_pop_array.shape
 
     # preprocess datasets
@@ -195,8 +218,12 @@ if __name__ == '__main__':
     patient_array_sense = original_patient_array[:, sense_index]
     fake_array_sense = original_fake_array[:, sense_index]
 
-    MAX_LEVELS = [1, 4, 2] + [1] * n_phe_qid  # maximal generalization level for each QID
-    generalization_mat = [[], [[0, 60], [0, 30, 60, 90], [i * 10 for i in range(12)]], [[0, 1, 2]]] + [[]] * n_phe_qid
+    if dataset == 'vumc':
+        MAX_LEVELS = [1, 4, 2] + [1] * n_phe_qid  # maximal generalization level for each QID
+        generalization_mat = [[], [[0, 60], [0, 30, 60, 90], [i * 10 for i in range(12)]], [[0, 1, 2]]] + [[]] * n_phe_qid
+    else:
+        MAX_LEVELS = [1, 2] + [1] * n_phe_qid  # maximal generalization level for each QID
+        generalization_mat = [[], [[0, 1, 2]]] + [[]] * n_phe_qid
 
     dic_replace = {}
 
@@ -212,29 +239,28 @@ if __name__ == '__main__':
         list_lamb = np.ones(n_patient)
 
     # clustering
-    dic_cluster = {}
-    dic_p = {}
-
-    for j in range(n_sense_index):
-        if not nom_sense[j]:
-            patient_sense_j = patient_array_sense[:, j].reshape(-1, 1)
-            range_n_clusters = [i + 2 for i in range(15)]
-            list_silhouette = []
-            silhouette_max = -1
-            for num_clusters in range_n_clusters:
-                kmeans = KMeans(n_clusters=num_clusters)
-                kmeans.fit(patient_sense_j)
-                cluster_labels = kmeans.labels_
-                silhouette = silhouette_score(patient_sense_j, cluster_labels)
-                list_silhouette.append(silhouette)
-                print("[PID:" + str(pid) + " (" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ")] (Attr:"
-                      + str(j) + ") n_clusters, silhouette_score: " + str(num_clusters) + ", " + str(silhouette))
-                if silhouette > silhouette_max:
-                    final_cluster_labels = cluster_labels
-                    silhouette_max = silhouette
-            dic_cluster[j] = final_cluster_labels
-
+    if dataset == 'vumc':
+        dic_cluster = {}
+        for j in range(n_sense_index):
+            if not nom_sense[j]:
+                patient_sense_j = patient_array_sense[:, j].reshape(-1, 1)
+                range_n_clusters = [i + 2 for i in range(15)]
+                list_silhouette = []
+                silhouette_max = -1
+                for num_clusters in range_n_clusters:
+                    kmeans = KMeans(n_clusters=num_clusters)
+                    kmeans.fit(patient_sense_j)
+                    cluster_labels = kmeans.labels_
+                    silhouette = silhouette_score(patient_sense_j, cluster_labels)
+                    list_silhouette.append(silhouette)
+                    print("[PID:" + str(pid) + " (" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ")] (Attr:"
+                          + str(j) + ") n_clusters, silhouette_score: " + str(num_clusters) + ", " + str(silhouette))
+                    if silhouette > silhouette_max:
+                        final_cluster_labels = cluster_labels
+                        silhouette_max = silhouette
+                dic_cluster[j] = final_cluster_labels
     start2 = time.time()
+    dic_p = {}
     for i_lattice in range(n_lattice_nodes):
         levels = lattice[i_lattice]
         if i_lattice == 0:
@@ -280,7 +306,7 @@ if __name__ == '__main__':
                                 record_sense_j = patient_array_sense[i, j]
                                 patient_sense_j = patient_array_sense[:, j]
                                 fake_match_sense_j = fake_array_sense[match_fake, j]
-                                if nom_sense[j]:
+                                if (dataset == 'vumc' and nom_sense[j]) or dataset != 'vumc':
                                     if (record_sense_j, j) in dic_p:
                                         p = dic_p[(record_sense_j, j)]
                                     else:

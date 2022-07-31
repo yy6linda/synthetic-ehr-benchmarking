@@ -1,24 +1,24 @@
 # 03/15/2022 edited by Zhiyu Wan
-# 05/13/2022 changed back to one-hot coding
+# 05/14/2022 add normalization
 import numpy as np
 import os.path
 import time
 import sys
 
 '''
-Usage: synthetic_risk_model_uw_mem.py [model] [exp_id] [theta] [train_filename] [test_filename] [prefix_syn] [infix_syn] [output_directory]
+Usage: synthetic_risk_model_mem.py [model] [exp_id] [theta] [train_filename] [test_filename] [prefix_syn] [infix_syn] [output_directory]
 
-Example: synthetic_risk_model_uw_mem.py iwae 1 5 train_uw test_uw syn_ _uw _ Results_Synthetic_UW/
+Example: synthetic_risk_model_mem.py iwae 1 5 train_vumc test_vumc syn_ _vumc _ Results_Synthetic_VUMC/
 
 1. [model]: name of data generation model. Selected from ['iwae', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'iwae'.
 2. [exp_id]: No. of the experiment. Selected from ['1', '2', '3']. Default: '1'.
 3. [theta]: the threshold for the euclidean distance between two records. Default: '5'. Try: '10' and '20'.
-4. [train_filename]: the filename of the training file. Default: 'train_uw'.
-5. [test_filename]: the filename of the test file. Default: 'test_uw'.
+4. [train_filename]: the filename of the training file. Default: 'train_vumc'.
+5. [test_filename]: the filename of the test file. Default: 'test_vumc'.
 6. [prefix_syn]: the prefix of the synthetic filename. Default: 'syn_'.
-7. [suffix_syn]: the suffix of the synthetic filename. Default: '_uw'.
+7. [suffix_syn]: the suffix of the synthetic filename. Default: '_vumc'.
 8. [infix_syn]: the suffix of the synthetic filename in the middle of [model_name] and [exp_id]. Default: '_'.
-9. [output_directory]: output directory. Default: 'Results_Synthetic_UW/'.
+9. [output_directory]: output directory. Default: 'Results_Synthetic_VUMC/'.
 '''
 
 
@@ -51,16 +51,21 @@ def each_group(model):
 
 if __name__ == '__main__':
     # Default configuration
+    dataset = "vumc"  # or "uw"
     model = 'iwae'
     exp_id = "1"
     theta = 5
-    train_patient_filename = 'train_uw'
-    test_patient_filename = 'test_uw'
+    train_patient_filename = 'train_' + dataset
+    test_patient_filename = 'test_' + dataset
     prefix_syn = 'syn_'
-    suffix_syn = '_uw'
+    suffix_syn = '_' + dataset
     infix_syn = '_'
     input_format = 'npy'
-    Result_folder = "Results_Synthetic_UW/"
+    if dataset == 'vumc':
+        n_cont_col = 8  # number of columns for continuous features from the right
+    else:
+        n_cont_col = 0
+    Result_folder = "Results_Synthetic_" + dataset + "+/"
     if not os.path.exists(Result_folder):
         os.mkdir(Result_folder)
     batchsize = 1000
@@ -101,20 +106,33 @@ if __name__ == '__main__':
         test = np.genfromtxt('data/' + test_patient_filename + '.csv', delimiter=',', skip_header=1)
     n_train = np.shape(train)[0]
     n_test = np.shape(test)[0]
-
     if model == 'real':
-        fake = train
+        fake = train.copy()
     else:
         fake_filename = prefix_syn + model + infix_syn + exp_id + suffix_syn
         if input_format == 'npy':
             fake = np.load('data/' + fake_filename + '.npy')
         else:
             fake = np.genfromtxt('data/' + fake_filename + '.csv', delimiter=',', skip_header=1)
-
-    result = each_group(model)
     elapsed1 = (time.time() - start1)
+    start2 = time.time()
+    # normalization
+    [n_row, n_col] = fake.shape
+    for j in range(n_col-n_cont_col, n_col):
+        normal_max = np.amax(fake[:, j])
+        normal_min = np.amin(fake[:, j])
+        normal_range = normal_max - normal_min
+        fake[:, j] = (fake[:, j] - normal_min) / normal_range
+        train[:, j] = (train[:, j] - normal_min) / normal_range
+        test[:, j] = (test[:, j] - normal_min) / normal_range
+    result = each_group(model)
+    elapsed2 = (time.time() - start2)
     print("Risk: " + str(result) + ".")
-    print("Time used: " + str(elapsed1) + " seconds.")
+    print("Time used: " + str(elapsed1 + elapsed2) + " seconds.")
+    print("Loading time used: " + str(elapsed1) + " seconds.")
+    print("Computing time used: " + str(elapsed2) + " seconds.")
     with open(Result_folder + exp_name + "_" + model + "_" + exp_id + "_theta" + str(theta) + ".txt", 'w') as f:
         f.write(str(result) + "\n")
-        f.write("Time used: " + str(elapsed1) + " seconds.\n")
+        f.write("Time used: " + str(elapsed1 + elapsed2) + " seconds.\n")
+        f.write("Loading time used: " + str(elapsed1) + " seconds.\n")
+        f.write("Computing time used: " + str(elapsed2) + " seconds.\n")
