@@ -46,3 +46,13 @@ We consider three use cases of synthetic data to demonstrate generative model se
 Medical AI development|0.05|0.05|0.05|0.35|0.15|0.05|0.1|0.1|0.1|
 |System design|0.25|0.05|0.05|0.05|0.05|0.05|1/6|1/6|1/6
 
+## Data
+---
+The example data are for demonstration only, so they are randomly generated. However, they are in the same format as the real datasets we used in our experiments. Some summary statistics about the example data. All the names for phe-codes are pseudonyms.
+|Dataset | Number of records (rows)| Number of features (columns) |
+|UW training | 46698 | 2670 |
+|UW test | 46698 | 2670 |
+|UW population | 46698 | 2670 |
+|VUMC training | 63303 | 6000 |
+|VUMC test | 63303 | 2592 |
+|VUMC population | 63303 | 2592 |
