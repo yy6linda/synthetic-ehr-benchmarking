@@ -160,6 +160,7 @@ if __name__ == '__main__':
     if dataset == 'vumc':
         top_phe = [509, 1129, 602, 1185, 654, 1200, 1176, 525, 1183, 698]
         # 401.1, 745, 465, 785, 512.8, 798, 773, 418, 783, 530.11
+        # change to [7, 8, 9, 10, 11, 12, 13, 14, 15, 16] for the example data
         qid_index = [0, 1, 2] + [top_phe[i] for i in range(n_phe_qid)]
         n_qid = len(qid_index)
         n_index = 2592
@@ -169,6 +170,7 @@ if __name__ == '__main__':
     else:
         top_phe = [10, 682, 1497, 17, 459, 285, 12, 1565, 967, 1575]
         # 1010.0, 401.1, 745.0, 1010.7, 318.0, 272.1, 1010.2, 773.0, 530.11, 785.0
+        # change to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] for the example data
         qid_index = [0, 1] + [top_phe[i] + 3 for i in range(n_phe_qid)]  # shifted
         n_qid = len(qid_index)
         n_index = 2665
