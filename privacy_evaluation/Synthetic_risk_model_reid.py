@@ -13,9 +13,9 @@ import datetime
 '''
 Usage: synthetic_risk_model_reid.py [model] [exp_id] [theta] [original_filename] [pop_filename] [prefix_syn] [infix_syn] [output_directory] [n_phe_qid]
 
-Example: synthetic_risk_model_reid.py iwae 1 0.05 train_vumc pop_vumc syn_ _vumc _ Results_Synthetic_VUMC/ 7
+Example: synthetic_risk_model_reid.py baseline 1 0.05 train_vumc pop_vumc syn_ _vumc _ Results_Synthetic_VUMC/ 7
 
-1. [model]: name of data generation model. Selected from ['iwae', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'iwae'.
+1. [model]: name of data generation model. Selected from ['baseline', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'real'.
 2. [exp_id]: No. of the experiment. Selected from ['1', '2', '3']. Default: '1'.
 3. [theta]: ratio of the correctly inferred attributes in a successful attack. A real number in [0, 1]. Default: '0.05'. Try: '0.001'.
 4. [original_filename]: the filename of the original patient file. Default: 'train_vumc'.
