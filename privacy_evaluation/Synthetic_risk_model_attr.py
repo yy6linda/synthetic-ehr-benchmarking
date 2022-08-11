@@ -11,9 +11,9 @@ import sys
 '''
 Usage: synthetic_risk_model_attr.py [model] [exp_id] [x] [y] [original_filename] [prefix_syn] [infix_syn] [output_directory]
 
-Example: synthetic_risk_model_attr.py iwae 1 0 8 train_uw syn_ _vumc _ Results_Synthetic_VUMC/
+Example: synthetic_risk_model_attr.py baseline 1 0 8 train_uw syn_ _vumc _ Results_Synthetic_VUMC/
 
-1. [model]: name of data generation model. Selected from ['iwae', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'iwae'.
+1. [model]: name of data generation model. Selected from ['baseline', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'real'.
 2. [exp_id]: No. of the experiment. Selected from ['1', '2', '3']. Default: '1'.
 3. [x]: 10 to x is the number of neighbours. A integer larger than -1. Default: '0'. Try: '1'.
 4. [y]: 2 to y is the number of sensitive attributes A integer larger than -1. Default: '8'. Try: '10'.
