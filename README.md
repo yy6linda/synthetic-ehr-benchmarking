@@ -46,6 +46,15 @@ We consider three use cases of synthetic data to demonstrate generative model se
 Medical AI development|0.05|0.05|0.05|0.35|0.15|0.05|0.1|0.1|0.1|
 |System design|0.25|0.05|0.05|0.05|0.05|0.05|1/6|1/6|1/6
 
+We included in the github two rank files as input for the model recommendation step.
+
+`./model_recommendation/rank_utility_privacy.csv` - separate ranking for UW and VUMC data under different synthesis paradigms.
+
+`./model_recommendation/rank_utility_privacy.csv` - comparison rank for UW synthetic data generated under combined and separate synthesis paradigms.
+
+The final score is calculated using `./model_recommendation/use_case.ipynb` 
+
+To be noticed, the weights for each metric can be adjusted to suit the evaluation needs for other use cases that are not included in the study.
 ## Data
 ---
 The example data are for demonstration only, so they are randomly generated. However, they are in the same format as the real datasets we used in our experiments. Some summary statistics about the example data are provided below. All the names for phe-codes are pseudonyms.
