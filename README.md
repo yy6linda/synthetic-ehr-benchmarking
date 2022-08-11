@@ -2,14 +2,11 @@
 ---
 ## Overview
 ---
-This document describes how to benchmark Generative Adversarial Networks(GANs)-based approaches for generating synthetic patient data. We provided evaluation from both utility and privacy prospectives.
-
-The figure below describes the benchmarking framework, which involves three phases - Synthetic EHR data generation,  multifaceted assessment and model recommendation.
+This document describes how to benchmark Generative Adversarial Networks(GANs)-based approaches for generating synthetic electronic health record (EHR) data. The figure below describes the benchmarking framework, which involves three phases - Synthetic EHR data generation,  multifaceted assessment and model recommendation.
 
 The result of this work has been made public at arXiv: [A Multifaceted Benchmarking of Synthetic Electronic Health Record Generation Models](https://arxiv.org/abs/2208.01230)
 
-Reference:
-
+### Reference:
 *Yan C, Yan Y, Wan Z, Zhang Z, Omberg L, Guinney J, Mooney SD, Malin BA. A Multifaceted Benchmarking of Synthetic Electronic Health Record Generation Models. arXiv preprint arXiv:2208.01230.*
 
 
