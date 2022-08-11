@@ -11,15 +11,24 @@ The result of this work has been made public in the arxiv paper [A Multifaceted 
 ![image](./data/Figure1.png)
 
 ## System requirement
-numpy>=1.17.2
-pandas>=0.25.1
-matplotlib>=3.2.1
-scipy>=1.5.2
-sklearn>=0.21.3
-lightgbm>=3.0.0
-shap>=0.36.0
-joblib>=0.14.0
-seaborn>=0.10.0
+
+### OS Requirements
+This package is supported for *Linux*. The package has been tested on the following systems:
++ Linux: Ubuntu 20.04
+
+### Python Dependencies
+
+```
+numpy
+pandas
+matplotlib
+scipy
+sklearn
+lightgbm
+shap
+joblib
+seaborn
+```
 
 ## Synthetic EHR data generation
 ---
