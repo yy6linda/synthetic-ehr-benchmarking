@@ -81,7 +81,7 @@ The final score is calculated using `./model_recommendation/use_case.ipynb`
 To be noticed, the weights for each metric can be adjusted to suit the evaluation needs for other use cases that are not included in the study.
 ## Data
 ---
-The example data are for demonstration only, so they are randomly generated. However, they are in the same format as the real datasets we used in our experiments except that the number of records in a real dadtaset is ten times of the number of records in the corresponding example dataset. Some summary statistics about the example data are provided below. All the names for binary mecical features in the datasets shown in the headlines files have been converted to pseudonyms.
+The example data are for demonstration only, so they are randomly generated. However, they are in the same format as the real datasets we used in our experiments except that the number of records in a real dadtaset is about ten times of the number of records in the corresponding example dataset. Some summary statistics about the example data are provided below. All the names for binary mecical features in the datasets shown in the headlines files have been converted to pseudonyms.
 |Dataset | Number of records (rows)| Number of features (columns) |
 | ----------- | ----------- | ----------- |
 |UW training | 13213 | 2670 |
