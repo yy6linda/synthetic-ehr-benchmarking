@@ -1,4 +1,4 @@
-# Synthetic EHR benchmarking framework
+# Benchmarking framework of synthetic electronic health record generation models
 ---
 ## Overview
 ---
