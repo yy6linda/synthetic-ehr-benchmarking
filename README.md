@@ -11,7 +11,15 @@ The result of this work has been made public in the arxiv paper [A Multifaceted 
 ![image](./data/Figure1.png)
 
 ## System requirement
-
+numpy>=1.17.2
+pandas>=0.25.1
+matplotlib>=3.2.1
+scipy>=1.5.2
+sklearn>=0.21.3
+lightgbm>=3.0.0
+shap>=0.36.0
+joblib>=0.14.0
+seaborn>=0.10.0
 
 ## Synthetic EHR data generation
 ---
