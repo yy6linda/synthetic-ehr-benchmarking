@@ -6,6 +6,8 @@ This document describes how to benchmark Generative Adversarial Networks(GANs)-b
 
 The figure below describes the benchmarking framework, which involves three phases - Synthetic EHR data generation,  multifaceted assessment and model recommendation.
 
+The result of this work has been made public in the arxiv paper [A Multifaceted Benchmarking of Synthetic Electronic Health Record Generation Models](https://arxiv.org/abs/2208.01230)
+
 ![image](./data/Figure1.png)
 
 ## Synthetic EHR data generation
