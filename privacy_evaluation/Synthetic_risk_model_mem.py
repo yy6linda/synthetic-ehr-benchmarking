@@ -8,9 +8,9 @@ import sys
 '''
 Usage: synthetic_risk_model_mem.py [model] [exp_id] [theta] [train_filename] [test_filename] [prefix_syn] [infix_syn] [output_directory]
 
-Example: synthetic_risk_model_mem.py iwae 1 5 train_vumc test_vumc syn_ _vumc _ Results_Synthetic_VUMC/
+Example: synthetic_risk_model_mem.py baseline 1 5 train_vumc test_vumc syn_ _vumc _ Results_Synthetic_VUMC/
 
-1. [model]: name of data generation model. Selected from ['iwae', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'iwae'.
+1. [model]: name of data generation model. Selected from ['baseline', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'real'.
 2. [exp_id]: No. of the experiment. Selected from ['1', '2', '3']. Default: '1'.
 3. [theta]: the threshold for the euclidean distance between two records. Default: '5'. Try: '10' and '20'.
 4. [train_filename]: the filename of the training file. Default: 'train_vumc'.
