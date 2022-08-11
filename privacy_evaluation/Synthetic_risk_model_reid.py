@@ -3,7 +3,7 @@
 import numpy as np
 import time
 from scipy.linalg import cholesky
-from synthetic_risk_model_utils import prepare_data
+from synthetic_risk_model_utils import prepare_data, prepare_data_vumc
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 import sys
@@ -115,7 +115,7 @@ if __name__ == '__main__':
 
     # default configuration
     dataset = "vumc"  # or "uw"
-    model = 'iwae'
+    model = 'real'
     exp_id = "1"
     theta = 0.05  # ratio of the correctly inferred attributed in a successful attack.
     original_patient_filename = 'train_' + dataset
@@ -158,7 +158,6 @@ if __name__ == '__main__':
 
     randomization = True
     if dataset == 'vumc':
-        input_format = 'csv'
         top_phe = [509, 1129, 602, 1185, 654, 1200, 1176, 525, 1183, 698]
         # 401.1, 745, 465, 785, 512.8, 798, 773, 418, 783, 530.11
         qid_index = [0, 1, 2] + [top_phe[i] for i in range(n_phe_qid)]
@@ -168,7 +167,6 @@ if __name__ == '__main__':
         n_sense_index = len(sense_index)
         nom_sense = [True for i in range(n_sense_index - 7)] + [False for i in range(7)]
     else:
-        input_format = 'npy'
         top_phe = [10, 682, 1497, 17, 459, 285, 12, 1565, 967, 1575]
         # 1010.0, 401.1, 745.0, 1010.7, 318.0, 272.1, 1010.2, 773.0, 530.11, 785.0
         qid_index = [0, 1] + [top_phe[i] + 3 for i in range(n_phe_qid)]  # shifted
@@ -187,10 +185,10 @@ if __name__ == '__main__':
     pid = os.getpid()
 
     # input patient dataset
-    if input_format == 'npy':
-        original_patient_array = prepare_data('data/' + original_patient_filename + '.npy')
+    if dataset == 'vumc':
+        original_patient_array = prepare_data_vumc('data/' + original_patient_filename + '.npy')
     else:
-        original_patient_array = np.genfromtxt('data/' + original_patient_filename + '.csv', delimiter=',', skip_header=1)
+        original_patient_array = prepare_data('data/' + original_patient_filename + '.npy')
     (n_patient, _) = original_patient_array.shape
 
     # input fake patient dataset
@@ -198,17 +196,14 @@ if __name__ == '__main__':
         original_fake_array = original_patient_array
     else:
         fake_filename = prefix_syn + model + infix_syn + exp_id + suffix_syn
-        if input_format == 'npy':
-            original_fake_array = prepare_data('data/' + fake_filename + '.npy')
+        if dataset == 'vumc':
+            original_fake_array = prepare_data_vumc('data/' + fake_filename + '.npy')
         else:
-            original_fake_array = np.genfromtxt('data/' + fake_filename + '.csv', delimiter=',', skip_header=1)
+            original_fake_array = prepare_data('data/' + fake_filename + '.npy')
     (n_fake, _) = original_fake_array.shape
 
     # input pop dataset
-    if input_format == 'npy':
-        original_pop_array = np.load('data/' + pop_filename + '.npy')
-    else:
-        original_pop_array = np.genfromtxt('data/' + pop_filename + '.csv', delimiter=',', skip_header=1)
+    original_pop_array = np.load('data/' + pop_filename + '.npy')
     (n_pop, _) = original_pop_array.shape
 
     # preprocess datasets
