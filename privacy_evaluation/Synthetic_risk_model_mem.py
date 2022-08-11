@@ -52,7 +52,7 @@ def each_group(model):
 if __name__ == '__main__':
     # Default configuration
     dataset = "vumc"  # or "uw"
-    model = 'iwae'
+    model = 'real'
     exp_id = "1"
     theta = 5
     train_patient_filename = 'train_' + dataset
