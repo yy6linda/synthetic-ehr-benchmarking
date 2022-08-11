@@ -95,9 +95,9 @@ The example data are for demonstration only, so they are randomly generated. How
 All the names for binary medical features in the datasets shown in the headlines files have been converted to pseudonyms. Besides binary medical features, the UW datasets have features including race and gender. The race feature has been one-hot coded into six binary features. The gender is a binary feature. Besides binary medical features, the VUMC datasets have features including race, age, gender, and 7 continuous medical features. The race feature has been one-hot coded into five binary features. The gender is a binary feature. The age is a continuous feature.
 
 ## Instructions for usage
+---
 ### Utility
 ### Privacy
----
 Usage: synthetic_risk_model_mem.py [model] [exp_id] [beta] [train_filename] [test_filename] [prefix_syn] [infix_syn] [output_directory]
 Usage: synthetic_risk_model_attr.py [model] [exp_id] [x] [y] [original_filename] [prefix_syn] [infix_syn] [output_directory]
 Usage: synthetic_risk_model_reid.py [model] [exp_id] [theta] [original_filename] [pop_filename] [prefix_syn] [infix_syn] [output_directory]
