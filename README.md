@@ -10,6 +10,9 @@ The result of this work has been made public in the arxiv paper [A Multifaceted 
 
 ![image](./data/Figure1.png)
 
+## System requirement
+
+
 ## Synthetic EHR data generation
 ---
 We used this framework to evaluate five GAN-based models that were designed to synthesize EHR profiles of patients: 1) medGAN, 2) medBGAN, 3) EMR-WGAN, 4) WGAN, and 5) DPGAN. Additionally, we incorporated a baseline approach that randomly samples the values of features based on the marginal distributions of the real data  to complement the scope of benchmarking in terms of the variety of model behavior. We refer to this approach as the sampling baseline, or Baseline. Interestingly, as our results illustrate, this approach outperformed GAN-based models in practical use cases. 
