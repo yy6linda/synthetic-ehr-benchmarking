@@ -145,7 +145,7 @@ def cal_score(n, k):
 if __name__ == '__main__':
     # Default configuration
     dataset = "vumc"  # or "uw"
-    model = 'iwae'
+    model = 'real'
     exp_id = "1"
     x = 0  # 10 to x is the number of neighbours [0, 1]
     y = 8  # 2 to y is the number of sensitive attributes used by the attacker [0, 11]
