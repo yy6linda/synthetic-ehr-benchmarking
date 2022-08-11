@@ -81,12 +81,12 @@ The final score is calculated using `./model_recommendation/use_case.ipynb`
 To be noticed, the weights for each metric can be adjusted to suit the evaluation needs for other use cases that are not included in the study.
 ## Data
 ---
-The example data are for demonstration only, so they are randomly generated. However, they are in the same format as the real datasets we used in our experiments. Some summary statistics about the example data are provided below. All the names for phe-codes are pseudonyms.
+The example data are for demonstration only, so they are randomly generated. However, they are in the same format as the real datasets we used in our experiments except that the number of records in a real dadtaset is ten times of the corresponding example dataset. Some summary statistics about the example data are provided below. All the names for phe-codes are pseudonyms.
 |Dataset | Number of records (rows)| Number of features (columns) |
 | ----------- | ----------- | ----------- |
-|UW training | 46698 | 2670 |
-|UW test | 46698 | 2670 |
+|UW training | 13213 | 2670 |
+|UW test | 13213 | 2670 |
 |UW population | 46698 | 2670 |
-|VUMC training | 63303 | 6000 |
-|VUMC test | 63303 | 2592 |
-|VUMC population | 63303 | 2592
+|VUMC training | 1434 | 2596 |
+|VUMC test | 615 | 2596 |
+|VUMC population | 63303 | 2596
