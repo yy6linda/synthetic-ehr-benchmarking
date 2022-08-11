@@ -99,6 +99,9 @@ All the names for binary medical features in the datasets shown in the headlines
 ### Utility
 ### Privacy
 Usage: synthetic_risk_model_mem.py [model] [exp_id] [beta] [train_filename] [test_filename] [prefix_syn] [infix_syn] [output_directory]
+
 Usage: synthetic_risk_model_attr.py [model] [exp_id] [x] [y] [original_filename] [prefix_syn] [infix_syn] [output_directory]
+
 Usage: synthetic_risk_model_reid.py [model] [exp_id] [theta] [original_filename] [pop_filename] [prefix_syn] [infix_syn] [output_directory]
+
 (See privacy_evaluation/README_RISK_MODEL.txt for more details.)
