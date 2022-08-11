@@ -81,7 +81,8 @@ The final score is calculated using `./model_recommendation/use_case.ipynb`
 To be noticed, the weights for each metric can be adjusted to suit the evaluation needs for other use cases that are not included in the study.
 ## Data
 ---
-The example data are for demonstration only, so they are randomly generated. However, they are in the same format as the real datasets we used in our experiments except that the number of records in each real dadtaset is about ten times of the number of records in the corresponding example dataset. Some summary statistics about the example data are provided below. All the names for binary medical features in the datasets shown in the headlines files have been converted to pseudonyms. Besides binary medical features, the UW datasets have features including race and gender. The race feature has been one-hot coded into six binary features. The gender is a binary feature. Besides binary medical features, the VUMC datasets have features including race, age, gender, and 7 continuous medical features. The race feature has been one-hot coded into five binary features. The gender is a binary feature. The age is a continuous feature.
+The example data are for demonstration only, so they are randomly generated. However, they are in the same format as the real datasets we used in our experiments except that the number of records in each real dadtaset is about ten times of the number of records in the corresponding example dataset. Some summary statistics about the example data are provided below.
+
 |Dataset | Number of records (rows)| Number of features (columns) |
 | ----------- | ----------- | ----------- |
 |UW training | 13213 | 2670 |
@@ -90,3 +91,5 @@ The example data are for demonstration only, so they are randomly generated. How
 |VUMC training | 1434 | 2596 |
 |VUMC test | 615 | 2596 |
 |VUMC population | 63303 | 2596
+
+All the names for binary medical features in the datasets shown in the headlines files have been converted to pseudonyms. Besides binary medical features, the UW datasets have features including race and gender. The race feature has been one-hot coded into six binary features. The gender is a binary feature. Besides binary medical features, the VUMC datasets have features including race, age, gender, and 7 continuous medical features. The race feature has been one-hot coded into five binary features. The gender is a binary feature. The age is a continuous feature.
