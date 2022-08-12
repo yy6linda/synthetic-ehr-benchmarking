@@ -99,7 +99,7 @@ All the names for binary medical features in the datasets shown in the headlines
 ---
 ### Utility
 
-The evaluation for all metrics above uses Jupyter Notebook files under './utility_evaluation/', in which the intermediate results are put inline. 
+The evaluation for all utility metrics above uses Jupyter Notebook files under './utility_evaluation/', in which the intermediate results and figures that shown in the paper are put inline. 
 
 ### Privacy
 
@@ -111,4 +111,3 @@ Usage: synthetic_risk_model_attr.py [model] [exp_id] [x] [y] [original_filename]
 
 Usage: synthetic_risk_model_reid.py [model] [exp_id] [theta] [original_filename] [pop_filename] [prefix_syn] [infix_syn] [output_directory]
 
-(See privacy_evaluation/README_RISK_MODEL.txt for more details.)
