@@ -34,7 +34,7 @@ seaborn
 
 ## Synthetic EHR data generation
 ---
-We used this framework to evaluate five GAN-based models that were designed to synthesize EHR profiles of patients: 1) medGAN, 2) medBGAN, 3) EMR-WGAN, 4) WGAN, and 5) DPGAN. Additionally, we incorporated a baseline approach that randomly samples the values of features based on the marginal distributions of the real data  to complement the scope of benchmarking in terms of the variety of model behavior. We refer to this approach as the sampling baseline, or Baseline. Interestingly, as our results illustrate, this approach outperformed GAN-based models in practical use cases. 
+We used this framework to evaluate five GAN models that were designed to synthesize structured EHR profiles of patients: 1) medGAN, 2) medBGAN, 3) EMR-WGAN, 4) WGAN, and 5) DPGAN. Additionally, we incorporated a baseline approach that randomly samples the values of features based on the marginal distributions of the real data  to complement the scope of benchmarking in terms of the variety of model behavior. We refer to this approach as the sampling baseline, or Baseline.
 
 ## Multifaceted assessment
 ---
@@ -58,7 +58,7 @@ We included 7 metric for utility evaluation:
 We focused on three types of privacy attacks that have targeted fully synthetic patient datasets: attribute inference, membership inference, and meaningful identity disclosure.
 - **Attribute inference**
 - **Membership inference**
--  **Meaningful identity disclosure**
+- **Meaningful identity disclosure**
 
 ## Model recommendation
 ---
