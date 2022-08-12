@@ -54,6 +54,8 @@ We included 7 metric for utility evaluation:
 - **Record-level readability**
   -  Clinical knowledge violation
   
+
+  
 ### Privacy
 We focused on three types of privacy attacks that have targeted fully synthetic patient datasets: attribute inference, membership inference, and meaningful identity disclosure.
 - **Attribute inference**
@@ -70,7 +72,7 @@ We consider three use cases of synthetic data to demonstrate generative model se
 Medical AI development|0.05|0.05|0.05|0.35|0.15|0.05|0.1|0.1|0.1|
 |System design|0.25|0.05|0.05|0.05|0.05|0.05|1/6|1/6|1/6
 
-We included in the github two rank files as input for the model recommendation step.
+We provided the following two files (which include the results from all considered metrics) as input for the model recommendation step.
 
 `./model_recommendation/rank_utility_privacy.csv` - separate ranking for UW and VUMC data under different synthesis paradigms.
 
