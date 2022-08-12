@@ -54,7 +54,7 @@ We included 7 metric for utility evaluation:
 - **Record-level readability**
   -  Clinical knowledge violation
   
-
+The evaluation for all metrics above uses Jupyter Notebook files under './utility_evaluation/', in which the intermediate results are put inline.  
   
 ### Privacy
 We focused on three types of privacy attacks that have targeted fully synthetic patient datasets: attribute inference, membership inference, and meaningful identity disclosure.
