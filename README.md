@@ -53,8 +53,7 @@ We included 7 metric for utility evaluation:
    - Feature selection
 - **Record-level readability**
   -  Clinical knowledge violation
-  
-The evaluation for all metrics above uses Jupyter Notebook files under './utility_evaluation/', in which the intermediate results are put inline.  
+   
   
 ### Privacy
 We focused on three types of privacy attacks that have targeted fully synthetic patient datasets: attribute inference, membership inference, and meaningful identity disclosure.
@@ -99,7 +98,13 @@ All the names for binary medical features in the datasets shown in the headlines
 ## Instructions for usage
 ---
 ### Utility
+
+The evaluation for all metrics above uses Jupyter Notebook files under './utility_evaluation/', in which the intermediate results are put inline. 
+
 ### Privacy
+
+Privacy risk analysis were packaged into Python source files. See './privacy_evaluation/README_RISK_MODEL.txt' for detailed instructions.
+
 Usage: synthetic_risk_model_mem.py [model] [exp_id] [beta] [train_filename] [test_filename] [prefix_syn] [infix_syn] [output_directory]
 
 Usage: synthetic_risk_model_attr.py [model] [exp_id] [x] [y] [original_filename] [prefix_syn] [infix_syn] [output_directory]
