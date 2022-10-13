@@ -1,0 +1,19 @@
+﻿Metrics,Dimension-wise distribution,Column-wise correlation,Latent cluster analysis,Clinical knowledge violation,Medical concept abundance,TRTS Model performance ,TSTR Model performance ,Feature selection,Attribute inference,Membership inference,Meaningful identity disclosure,NNAA-based loss
+IWAE-VUMC,2,17,17,17,17,17,15,16.3,9,2.5,2,7
+medGAN-VUMC,16.3,12.7,12.3,9,11.3,6,9,9.2,4,9,5.3,6.3
+medBGAN-VUMC,11,10,7,10,11.3,10.3,13.7,11.5,5,10.3,10.3,5.7
+EMR-WGAN-VUMC,6.7,3.3,3.7,6,2,3.3,3.3,10.3,16.2,17,17,17
+WGAN-VUMC,6.3,3.7,5,2,5.7,7.3,7.3,4.3,14.8,12,13.3,13.3
+DPGAN-VUMC,14.7,10.3,12,13,9.7,13,8.7,5.3,8,6.2,9,7.7
+IWAE-UW-com,2,8,13,16.3,14,17,16,11.3,7,4,7,5.7
+medGAN-UW-com,12.3,10.3,10.3,11.7,8.7,11,10,11.2,5.3,10,7,12
+medBGAN-UW-com,8,6.3,5.7,6.7,9.3,9.7,9,6.7,11,10.3,10,10
+EMR-WGAN-UW-com,5,2,2,2,2,3.7,2,2,17,17,15.2,15
+WGAN-UW-com,12.7,13.3,9,13,6,5.7,5.7,9.7,2.7,11.7,15.8,9.3
+DPGAN-UW-com,17,17,17,7.3,17,10,14.3,16.2,14,4,2,5
+IWAE-UW-sep,2,6,12,14,16,4.8,6,8,9.2,3,6,16
+medGAN-UW-sep,13.3,13,13,8,9.3,11.5,14,12.3,8.3,5.7,11,9.3
+medBGAN-UW-sep,8,7,5,6,8.3,9.7,10.2,8.3,12.2,8.7,10.7,8.3
+EMR-WGAN-UW-sep,5,2,2,2,2,11,2,2,17,17,17,2
+WGAN-UW-sep,11.7,12,8,10,15,3.7,9.2,9.7,8.3,14,10.3,15
+DPGAN-UW-sep,17,17,17,17,6.3,16.3,15.7,16.7,2,8.7,2,6.3
