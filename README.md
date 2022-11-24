@@ -111,3 +111,4 @@ Usage: synthetic_risk_model_attr.py [model] [exp_id] [x] [y] [original_filename]
 
 Usage: synthetic_risk_model_reid.py [model] [exp_id] [theta] [original_filename] [pop_filename] [prefix_syn] [infix_syn] [output_directory]
 
+Usage: synthetic_risk_model_nnaa.py [model] [exp_id] [train_filename] [test_filename] [prefix_syn] [infix_syn] [output_directory]
