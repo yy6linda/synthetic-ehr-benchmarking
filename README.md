@@ -51,15 +51,17 @@ We included 7 metric for utility evaluation:
    - Train on real data test on synthetic data (TRTS) Model performance
    - Train on synthetic data test on real data (TSTR) Model performance
    - Feature selection
-- **Record-level readability**
+- **Record-level consistency**
   -  Clinical knowledge violation
+  -  Medical concept abundance
    
   
 ### Privacy
 We focused on three types of privacy attacks that have targeted fully synthetic patient datasets: attribute inference, membership inference, and meaningful identity disclosure.
-- **Attribute inference**
-- **Membership inference**
-- **Meaningful identity disclosure**
+- **Attribute inference risk**
+- **Membership inference risk**
+- **Meaningful identity disclosure risk**
+- **Nearest neighor adversarial accuracy risk**
 
 ## Model recommendation
 ---
