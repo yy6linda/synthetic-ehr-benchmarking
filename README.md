@@ -51,27 +51,26 @@ We included 7 metric for utility evaluation:
    - Train on real data test on synthetic data (TRTS) Model performance
    - Train on synthetic data test on real data (TSTR) Model performance
    - Feature selection
-- **Record-level consistency**
+- **Record-level readability**
   -  Clinical knowledge violation
-  -  Medical concept abundance
    
   
 ### Privacy
 We focused on three types of privacy attacks that have targeted fully synthetic patient datasets: attribute inference, membership inference, and meaningful identity disclosure.
-- **Attribute inference risk**
-- **Membership inference risk**
-- **Meaningful identity disclosure risk**
-- **Nearest neighor adversarial accuracy risk**
+- **Attribute inference**
+- **Membership inference**
+- **Meaningful identity disclosure**
 
 ## Model recommendation
 ---
 We consider three use cases of synthetic data to demonstrate generative model selections in the context of specific needs. The benchmarking framework translates a use case into weights on the metric-level results. By default, a weight of 0.1 was assigned to each metric and all weights sum to 1. We adjusted the weights according to the needs of the use case. The following provides a summary of the use case, while the detailed weight profiles are provided below.
 
-|Use case | Dimension-wide distribution | Column-wise correlation| Latent cluster analysis| Prediction performance| Feature selection| Clinical knowledge violation| Attribute inference| Membership inference| Meaningful identity disclosure|
-| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
-|Education | 0.25|0.15| 0.1| 0.1| 0.1| 0.15| 0.05| 0.05| 0.05|
-Medical AI development|0.05|0.05|0.05|0.35|0.15|0.05|0.1|0.1|0.1|
-|System design|0.25|0.05|0.05|0.05|0.05|0.05|1/6|1/6|1/6
+|Use case | Dimension-wide distribution | Column-wise correlation| Latent cluster analysis| Prediction performance| Feature selection| Clinical knowledge violation | Medical concept abundance| Attribute inference| Membership inference| Meaningful identity disclosure| NNAA risk
+| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |----------- | ----------- | ----------- | ----------- |
+|Education | 0.25|0.15| 0.05| 0.05| 0.05| 0.15| 0.1| 0.05| 0.05| 0.05 | 0.05|
+Medical AI development|0.04|0.04|0.04|0.35|0.15|0.04|0.04|0.075|0.075|0.075|0.075|
+|System design|0.15|0.04|0.04|0.04|0.04|0.04|0.15|0.125|0.125|0.125|0.125|
+
 
 We provided the following two files (which include the results from all considered metrics) as input for the model recommendation step.
 
