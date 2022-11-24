@@ -59,8 +59,8 @@ We included 7 metric for utility evaluation:
 We focused on four types of privacy risks that have targeted fully synthetic patient datasets: attribute inference risk, membership inference risk, meaningful identity disclosure risk, nearest neighbor adversarial accuracy risk .
 - **Attribute inference risk**
 - **Membership inference risk**
-- **Meaningful identity disclosure**
-- **Nearest neighbor adversarial accuracy disclosure**
+- **Meaningful identity disclosure risk**
+- **Nearest neighbor adversarial accuracy disclosure risk**
 
 ## Model recommendation
 ---
