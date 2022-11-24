@@ -43,3 +43,18 @@ Example: synthetic_risk_model_reid.py baseline 1 0.05 train_uw pop_uw syn_ _uw _
 7. [suffix_syn]: the suffix of the synthetic filename. Default: '_uw'.
 8. [infix_syn]: the suffix of the synthetic filename in the middle of [model_name] and [exp_id]. Default: '_'.
 9. [output_directory]: output directory. Default: 'Results_Synthetic_UW/'.
+
+
+
+Usage: synthetic_risk_model_uw_nnaa.py [model] [exp_id] [train_filename] [test_filename] [prefix_syn] [infix_syn] [output_directory]
+
+Example: synthetic_risk_model_uw_nnaa.py iwae 1 train_uw test_uw syn_ _uw _ Results_Synthetic_UW/
+
+1. [model]: name of data generation model. Selected from ['iwae', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'real'.
+2. [exp_id]: No. of the experiment. Selected from ['1', '2', '3']. Default: '1'.
+3. [train_filename]: the filename of the training file. Default: 'train_uw'.
+4. [test_filename]: the filename of the test file. Default: 'test_uw'.
+5. [prefix_syn]: the prefix of the synthetic filename. Default: 'syn_'.
+6. [suffix_syn]: the suffix of the synthetic filename. Default: '_uw'.
+7. [infix_syn]: the suffix of the synthetic filename in the middle of [model_name] and [exp_id]. Default: '_'.
+8. [output_directory]: output directory. Default: 'Results_Synthetic_UW/'.
