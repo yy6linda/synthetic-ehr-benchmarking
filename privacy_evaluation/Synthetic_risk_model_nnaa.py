@@ -11,7 +11,7 @@ Usage: synthetic_risk_model_nnaa.py [model] [exp_id] [train_filename] [test_file
 
 Example: synthetic_risk_model_nnaa.py iwae 1 train_vumc test_vumc syn_ _vumc _ Results_Synthetic_VUMC/
 
-1. [model]: name of data generation model. Selected from ['iwae', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'iwae'.
+1. [model]: name of data generation model. Selected from ['iwae', 'medgan', 'medbgan', 'emrwgan', 'medwgan', 'dpgan', 'real']. Default: 'real'.
 2. [exp_id]: No. of the experiment. Selected from ['1', '2', '3']. Default: '1'.
 3. [train_filename]: the filename of the training file. Default: 'train_vumc'.
 4. [test_filename]: the filename of the test file. Default: 'test_vumc'.
