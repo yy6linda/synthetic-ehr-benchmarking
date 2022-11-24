@@ -42,7 +42,7 @@ The Multifaceted assessment phase focuses on two perspectives — utility and pr
 ### Utility
 In earlier investigations, the term utility was defined in parallel with resemblance (i.e., the statistical similarity of two datasets), and was specifically used to refer to the value of real or synthetic data to support predictions. By contrast, in this work, data utility is defined to cover a general set of metrics, each measuring a factor to which the value of data is attributed. This is because numerous real-world use cases of synthetic data do not involve any prediction tasks, but still require the synthetic data to be useful (or has utility).
 
-We included 7 metric for utility evaluation:
+We included eight metric for utility evaluation:
 - **Feature-level statistics**
   - Dimension-wise distribution
   - Column-wise correlation
@@ -51,16 +51,17 @@ We included 7 metric for utility evaluation:
    - Train on real data test on synthetic data (TRTS) Model performance
    - Train on synthetic data test on real data (TSTR) Model performance
    - Feature selection
-- **Record-level readability**
+- **Record-level consistency**
   -  Clinical knowledge violation
+  -  Medical concept abundance
    
   
 ### Privacy
-We focused on four types of privacy risks that have targeted fully synthetic patient datasets: attribute inference risk, membership inference risk, meaningful identity disclosure risk, nearest neighbor adversarial accuracy risk .
-- **Attribute inference risk**
-- **Membership inference risk**
-- **Meaningful identity disclosure risk**
-- **Nearest neighbor adversarial accuracy disclosure risk**
+We focused on four types of privacy attacks that have targeted fully synthetic patient datasets:
+- **Attribute inference**
+- **Membership inference**
+- **Meaningful identity disclosure**
+- **Nearest neighbor adversarial accuracy (NNAA)**
 
 ## Model recommendation
 ---
