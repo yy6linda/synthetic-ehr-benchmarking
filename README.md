@@ -10,7 +10,7 @@ The result of this work has been made public at arXiv: [A Multifaceted Benchmark
 *Yan C, Yan Y, Wan Z, Zhang Z, Omberg L, Guinney J, Mooney SD, Malin BA. A Multifaceted Benchmarking of Synthetic Electronic Health Record Generation Models. arXiv preprint arXiv:2208.01230.*
 
 
-![image](./data/Figure1.png)
+![image](./data/F1.png)
 
 ## System requirement
 
